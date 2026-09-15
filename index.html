@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Corrida dos Leads — Animasom</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- CABEÇALHO COM A EXTENSÃO CORRETA DA LOGO (logo.jpeg) -->
+      <header>
+        <img
+          src="logo.jpeg"
+          alt="Escudo Animasom"
+          class="shield-minimal"
+          onerror="
+            this.src = 'https://via.placeholder.com/60/f59e0b/000000?text=Logo'
+          "
+        />
+        <div class="nav-btn-container">
+          <button
+            id="btn-switch-view"
+            class="btn-toggle"
+            onclick="toggleView()"
+          >
+            ⚙️ Painel Admin
+          </button>
+        </div>
+        <h1>Corrida dos Leads</h1>
+        <p class="subtitle">Sentinelas do Infinito — Rio Sul</p>
+        <div style="margin-top: 8px">
+          <span class="dev-tag">Desenvolvido por Victor</span>
+        </div>
+      </header>
+
+      <!-- SEÇÃO 1: PISTA DE CORRIDA E RANKING -->
+      <section id="view-ranking" class="view-section active">
+        <div class="section-title">🏆 Pódio dos Campeões (Top 3)</div>
+        <div id="podium" class="podium-container"></div>
+
+        <div class="section-title" style="margin-top: 30px">
+          🐎 Pista de Aceleração & Ranking
+        </div>
+        <div id="ranking-list"></div>
+
+        <!-- CARD DE PROGRESSO GLOBAL -->
+        <div class="global-progress-card">
+          <div class="global-header">
+            <span>Progresso Coletivo da Equipe</span>
+            <span id="global-stats">0 / 0 leads (0%)</span>
+          </div>
+          <div class="global-track">
+            <div id="global-bar" class="global-bar" style="width: 0%"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 2: PAINEL ADMINISTRATIVO -->
+      <section id="view-admin" class="view-section">
+        <div class="section-title">⚙️ Painel de Controle & Gestão</div>
+
+        <!-- Configurar Meta -->
+        <div class="admin-card">
+          <div class="form-group">
+            <label>Meta Individual por Recepcionista:</label>
+            <input
+              type="number"
+              id="input-meta-individual"
+              class="form-control"
+              placeholder="Ex: 100"
+            />
+          </div>
+          <button class="btn-primary" onclick="atualizarMeta()">
+            Salvar Nova Meta
+          </button>
+        </div>
+
+        <!-- Lançamento Diário de Leads -->
+        <div class="admin-card">
+          <div
+            class="section-title"
+            style="border-left-color: var(--accent-blue); font-size: 11pt"
+          >
+            ⚡ Lançamento Diário de Leads
+          </div>
+          <div id="lancamento-inputs"></div>
+          <button
+            class="btn-primary"
+            style="margin-top: 15px"
+            onclick="salvarLancamentos()"
+          >
+            Lançar Leads Diários
+          </button>
+        </div>
+
+        <!-- Gerenciar Equipe -->
+        <div class="admin-card">
+          <div
+            class="section-title"
+            style="border-left-color: #38bdf8; font-size: 11pt"
+          >
+            👥 Gerenciar Equipe
+          </div>
+          <div class="form-group">
+            <label>Nome do Novo Recepcionista:</label>
+            <div style="display: flex; gap: 10px">
+              <input
+                type="text"
+                id="novo-nome"
+                class="form-control"
+                placeholder="Nome completo"
+              />
+              <button class="btn-primary" onclick="adicionarRecepcionista()">
+                Adicionar
+              </button>
+            </div>
+          </div>
+          <div id="lista-gerenciamento" style="margin-top: 15px"></div>
+        </div>
+
+        <!-- Exportar Relatório PDF -->
+        <div class="admin-card">
+          <div
+            class="section-title"
+            style="border-left-color: #ef4444; font-size: 11pt"
+          >
+            📊 Exportar Relatório (PDF)
+          </div>
+          <div class="date-range-row">
+            <div style="flex: 1; min-width: 140px">
+              <label style="color: var(--text-muted); font-size: 9.5pt"
+                >Data Inicial:</label
+              >
+              <input type="date" id="data-inicio" class="form-control" />
+            </div>
+            <div style="flex: 1; min-width: 140px">
+              <label style="color: var(--text-muted); font-size: 9.5pt"
+                >Data Final:</label
+              >
+              <input type="date" id="data-fim" class="form-control" />
+            </div>
+          </div>
+          <button
+            class="btn-primary"
+            style="background: #ef4444; color: #fff"
+            onclick="exportarPDF()"
+          >
+            Gerar Relatório do Período
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <!-- BIBLIOTECAS EXTERNAS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- SCRIPT DE LÓGICA (Mantido intacto salvando no Supabase) -->
+    <script src="script.js"></script>
+  </body>
+</html>
