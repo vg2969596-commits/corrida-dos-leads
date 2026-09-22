@@ -246,6 +246,18 @@ async function salvarLancamentos() {
         alert("Erro ao salvar leads para " + rec.nome + ": " + error.message);
         return;
       }
+
+      // Registra no log central do ecossistema (tabela `eventos`), para
+      // consolidar os resultados de todos os projetos em um único lugar
+      // (hub / planilha do Google Sheets sincronizada).
+      await supabaseClient.from("eventos").insert([
+        {
+          projeto: "corrida-dos-leads",
+          tipo: "lead_lancado",
+          quantidade: addVal,
+          responsavel: rec.nome,
+        },
+      ]);
     }
   }
   alert("Leads lançados e salvos na nuvem!");
