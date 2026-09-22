@@ -250,14 +250,19 @@ async function salvarLancamentos() {
       // Registra no log central do ecossistema (tabela `eventos`), para
       // consolidar os resultados de todos os projetos em um único lugar
       // (hub / planilha do Google Sheets sincronizada).
-      await supabaseClient.from("eventos").insert([
-        {
-          projeto: "corrida-dos-leads",
-          tipo: "lead_lancado",
-          quantidade: addVal,
-          responsavel: rec.nome,
-        },
-      ]);
+      try {
+        await supabaseClient.from("eventos").insert([
+          {
+            projeto: "corrida-dos-leads",
+            tipo: "lead_lancado",
+            quantidade: addVal,
+            responsavel: rec.nome,
+          },
+        ]);
+      } catch (err) {
+        // Falha ao registrar no ecossistema não deve travar o lançamento de leads.
+        console.warn("Não foi possível registrar o evento no ecossistema:", err);
+      }
     }
   }
   alert("Leads lançados e salvos na nuvem!");
